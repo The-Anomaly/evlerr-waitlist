@@ -40,6 +40,7 @@
     border: none;
     height: 44px;
     margin-bottom: 2rem;
+    flex-wrap: wrap;
 
     input {
       border: none;
@@ -48,6 +49,7 @@
       padding: 12px;
       width: calc(100% - 95px);
       max-width: 300px;
+      outline: none;
     }
 
     button {
@@ -57,6 +59,13 @@
       font-family: "Poppins", sans-serif;
       padding: 12px 16px;
       font-weight: 500;
+    }
+
+    .error {
+      width: 100%;
+      color: var(--red);
+      font-size: 12px;
+      margin-top: 4px;
     }
   }
 
