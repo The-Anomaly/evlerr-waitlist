@@ -74,6 +74,41 @@
   }
 }
 
+.toast {
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  width: 300px;
+  border-radius: 10px;
+  padding: 1rem;
+
+  &.success {
+    background: #1d4b33;
+
+    h3 {
+      color: #2dc573;
+    }
+  }
+
+  &.error {
+    background: #351313;
+    h3 {
+      color: #f45858;
+    }
+  }
+
+  h3 {
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  p {
+    color: #fff;
+    font-size: 13px;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .container {
     grid-template-columns: 1fr 1fr;
