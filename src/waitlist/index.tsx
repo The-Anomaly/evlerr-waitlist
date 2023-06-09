@@ -15,15 +15,13 @@ const Waitlist = () => {
     setEmail("");
   };
 
-  const { toast, closeSurveyToast, sendMessage, loading } = useSheet({
+  const { toast, sendMessage, loading } = useSheet({
     closeForm: onClose,
     message: {
       success: "You've been added to the waitlist!",
       error: "Failed to add to waitlist, please try again later",
     },
   });
-
-  console.log(toast, closeSurveyToast, loading);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError("");
@@ -35,7 +33,6 @@ const Waitlist = () => {
     setError("");
     if (regex.test(email)) {
       // submit
-      console.log(email);
       sendMessage({ email });
     } else {
       // error
