@@ -1,4 +1,4 @@
-import { Logo } from "assets";
+import { Logo, Logo2 } from "assets";
 import styles from "./styles.module.scss";
 import { useState } from "react";
 import { TypeAnimation } from "react-type-animation";
@@ -43,6 +43,8 @@ const Waitlist = () => {
     }
   };
 
+  const isProperties = window.location.origin.includes("propertyy.co");
+
   return (
     <main className={styles.container}>
       {toast.show && (
@@ -57,7 +59,11 @@ const Waitlist = () => {
       )}
       <section className={styles.imgSec}></section>
       <section className={styles.contentSec}>
-        <Logo className={styles.logo} />
+        {!isProperties ? (
+          <Logo className={styles.logo} />
+        ) : (
+          <Logo2 className={`${styles.logo} ${styles.logo2}`} />
+        )}
         <h1 className={styles.ttl}>
           Find Properties for{" "}
           <span>
