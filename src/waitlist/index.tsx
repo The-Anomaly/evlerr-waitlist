@@ -37,17 +37,15 @@ const Waitlist = () => {
 
   const sendMessage = () => {
     setLoading(true);
-    const data = {
-      Time: new Date(),
-      Email: email,
-    };
+    const data = new FormData();
+    data.append("Time", new Date().toUTCString());
+    data.append("Email", email);
 
     if (!SCRIPT_API_URL) return;
 
     axios
       .post(SCRIPT_API_URL, data)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         setError("");
         setEmail("");
         setToast({
@@ -56,9 +54,9 @@ const Waitlist = () => {
           heading: "Great!",
           text: "You've been added to the waitlist!",
         });
+        setLoading(false);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         setToast({
           show: true,
           type: false,
@@ -66,6 +64,11 @@ const Waitlist = () => {
           text: "Failed to add to waitlist, please try again later",
         });
         setLoading(false);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setToast({ ...toast, show: false });
+        }, 5000);
       });
   };
 
