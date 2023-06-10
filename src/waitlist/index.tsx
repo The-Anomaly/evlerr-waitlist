@@ -2,26 +2,21 @@ import { Logo, Logo2 } from "assets";
 import styles from "./styles.module.scss";
 import { useState } from "react";
 import { TypeAnimation } from "react-type-animation";
-import { useSheet } from "helpers/sheet";
+import axios from "axios";
+import { SCRIPT_API_URL } from "config";
 
 const regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
 
 const Waitlist = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-
-  const onClose = () => {
-    setError("");
-    setEmail("");
-  };
-
-  const { toast, sendMessage, loading } = useSheet({
-    closeForm: onClose,
-    message: {
-      success: "You've been added to the waitlist!",
-      error: "Failed to add to waitlist, please try again later",
-    },
+  const [toast, setToast] = useState({
+    show: false,
+    heading: "",
+    text: "",
+    type: true,
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError("");
@@ -33,11 +28,45 @@ const Waitlist = () => {
     setError("");
     if (regex.test(email)) {
       // submit
-      sendMessage({ email });
+      sendMessage();
     } else {
       // error
       setError("Enter a valid email");
     }
+  };
+
+  const sendMessage = () => {
+    setLoading(true);
+    const data = {
+      Time: new Date(),
+      Email: email,
+    };
+
+    if (!SCRIPT_API_URL) return;
+
+    axios
+      .post(SCRIPT_API_URL, data)
+      .then((res) => {
+        console.log(res);
+        setError("");
+        setEmail("");
+        setToast({
+          show: true,
+          type: true,
+          heading: "Great!",
+          text: "You've been added to the waitlist!",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        setToast({
+          show: true,
+          type: false,
+          heading: "Sorry!",
+          text: "Failed to add to waitlist, please try again later",
+        });
+        setLoading(false);
+      });
   };
 
   const isProperties = window.location.origin.includes("propertyy.co");
